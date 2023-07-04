@@ -13,8 +13,8 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/ssosung?serverTimezone=Asia/Seoul
-    username: root
-    password: root1234
+#    username: root
+#    password: root1234
   jpa:
     hibernate:
       ddl-auto: none
