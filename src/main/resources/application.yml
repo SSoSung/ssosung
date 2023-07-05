@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 8080
   servlet:
     context-path: /
     encoding:
@@ -13,8 +13,8 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/ssosung?serverTimezone=Asia/Seoul
-    username: ?
-    password: ?
+    username: root
+    password: root1234
   jpa:
     hibernate:
       ddl-auto: none
@@ -23,3 +23,11 @@ spring:
       hibernate.format_sql: true
       hibernate:
         dialect: org.hibernate.dialect.MariaDBDialect
+
+  decorator:
+    datasource:
+      p6spy:
+      enable-logging: true
+      multiline: true
+      logging: slf4j
+      tracing.include-parameter-values: true
