@@ -53,17 +53,5 @@ public class UserDto {
             this.email = email;
             this.cellPhone = cellPhone;
         }
-
-        public User toEntity(UserDto.SignUpRequest request) {
-            return User.builder()
-                    .userId(request.getUserId())
-                    .userPw(request.getUserPw())
-                    .userNm(request.getUserNm())
-                    .email(request.getEmail())
-                    .cellPhone(request.getCellPhone())
-                    .userRole(Role.ROLE_USER.value())
-                    .useYn("N")
-                    .build();
-        }
     }
 }
