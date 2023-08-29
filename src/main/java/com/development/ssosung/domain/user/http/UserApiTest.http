@@ -3,11 +3,11 @@ POST http://localhost:8090/api/user/sign-up
 Content-Type: application/json; charset=utf-8
 
 {
-  "userId" : "1234",
-  "userPw" : "1234!@",
-  "userNm" : "1234",
-  "email" : "1234@gmail.com",
-  "cellPhone" : "010-1234-5678"
+  "userId" : "test",
+  "userPw" : "test",
+  "userNm" : "test",
+  "email" : "test",
+  "cellPhone" : "test"
 }
 
 

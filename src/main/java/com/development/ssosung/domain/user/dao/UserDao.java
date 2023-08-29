@@ -23,18 +23,25 @@ public class UserDao implements UserServ {
     @Transactional
     public void signUp(UserDto.SignUpRequest request) {
 
-        userRepo.findById(new UserId(request.getUserId())).orElseThrow(()-> new BadRequestException("사용중인 ID 입니다."));
+        User user = userRepo.findById(new UserId(request.getUserId())).orElse(null);
 
-        User newUser = User.builder()
-                .userId(request.getUserId())
-                .userPw(bCryptPasswordEncoder.encode(request.getUserPw()))
-                .userNm(request.getUserNm())
-                .email(request.getEmail())
-                .cellPhone(request.getCellPhone())
-                .userRole(Role.ROLE_USER.value())
-                .useYn("N")
-                .build();
+        if(user == null) {
+            User newUser = User.builder()
+                    .userId(request.getUserId())
+                    .userPw(bCryptPasswordEncoder.encode(request.getUserPw()))
+                    .userNm(request.getUserNm())
+                    .email(request.getEmail())
+                    .cellPhone(request.getCellPhone())
+                    .userRole(Role.ROLE_USER.value())
+                    .useYn("N")
+                    .build();
 
-        userRepo.save(newUser);
+            newUser.setCreUser("ssosung");
+
+            userRepo.save(newUser);
+        }else{
+            throw new BadRequestException("이미 있는 아이디 입니다.");
+        }
+
     }
 }

@@ -15,19 +15,18 @@ public class Security {
 
     private final Cors cors;
 
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http){
-//        http
-//                .httpBasic().disable()  // 비인증시 login form redirect X (rest api)
-//                .csrf().disable()       // crsf 보안 X (rest api)
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)// jwt token으로 인증
-//
-//                .and()
-//                .authorizeRequests()
-//                .requestMatchers("/**").permitAll()
-//                .anyRequest().authenticated();
-//
-//
-//        return http.build();
-//    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/api/**").permitAll()
+
+
+                .and()
+                .csrf().disable()
+                .addFilter(cors.corsFilter());
+
+
+        return http.build();
+    }
 }

@@ -45,13 +45,5 @@ public class UserDto {
         @NotBlank(message = "공백이 존재할 수 없습니다.")
         private String cellPhone;
 
-        @Builder
-        public SignUpRequest(String userId, String userPw, String userNm, String email, String cellPhone) {
-            this.userId = userId;
-            this.userPw = userPw;
-            this.userNm = userNm;
-            this.email = email;
-            this.cellPhone = cellPhone;
-        }
     }
 }
