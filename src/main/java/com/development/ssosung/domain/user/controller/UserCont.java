@@ -19,6 +19,12 @@ import javax.validation.Valid;
 @RestController
 public class UserCont {
 
+    // CRUD
+    // C -> void
+    // R -> return SsoSungApiResponse
+    // U -> void
+    // D -> void
+
     private final UserServ userServ;
 
     @PostMapping("/sign-up")
@@ -27,5 +33,10 @@ public class UserCont {
         userServ.signUp(request);
 
         return ResponseEntity.ok().body(new SsoSungApiResponse(SsoSungStatus.CREATED, "회원가입완료"));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<SsoSungApiResponse> login(@RequestBody @Valid UserDto.LoginRequest request){
+        return userServ.login(request);
     }
 }

@@ -46,4 +46,17 @@ public class UserDto {
         private String cellPhone;
 
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class LoginRequest{
+
+        @NotBlank(message = "공백이 존재할 수 없습니다.")
+        private String userId;
+
+        @NotBlank(message = "공백이 존재할 수 없습니다.")
+        private String userPw;
+    }
+
 }
