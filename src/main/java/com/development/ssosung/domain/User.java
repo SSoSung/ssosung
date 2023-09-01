@@ -3,27 +3,36 @@ package com.development.ssosung.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
 
-import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.GenerationType.AUTO;
-
-
-@Entity @Data @NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "USER")
+@Entity
 public class User {
 
     @Id
-    @GeneratedValue(strategy = AUTO)
-    private Long id;
+    @Column(name = "USER_ID", length = 30)
+    private String userId;
 
-    private String name;
+    @Column(name = "USER_PW", length = 500)
+    private String userPw;
 
-    private String username;
+    @Column(name = "USER_NM", length = 50)
+    private String userNm;
 
-    private String password;
+    @Column(name = "USER_TEL", length = 50)
+    private String userTel;
 
-    @ManyToMany(fetch = EAGER)
-    private Collection<Role> roles = new ArrayList<>();
+    @Column(name = "USER_ROLE", length = 10)
+    private String userRole;
 
+    @Builder
+    public User(String userId, String userPw, String userNm, String userTel, String userRole) {
+        this.userId = userId;
+        this.userPw = userPw;
+        this.userNm = userNm;
+        this.userTel = userTel;
+        this.userRole = userRole;
+    }
 }

@@ -1,16 +1,10 @@
 package com.development.ssosung;
 
-import com.development.ssosung.domain.Role;
-import com.development.ssosung.domain.User;
-import com.development.ssosung.service.UserService;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.ArrayList;
 
 @SpringBootApplication
 public class SsosungApplication {
@@ -33,7 +27,7 @@ public class SsosungApplication {
 //            userService.saveRole(new Role(null, "ROLE_ADMIN"));
 //            userService.saveRole(new Role(null, "ROLE_SUPER_ADMIN"));
 //
-//            userService.saveUser(new User(null, "John Travolta", "john" , "1234", new ArrayList<>()));
+//            userService.saveUser(new User("rlfhfh1209", "dkvkxm806!@", "KHS" , "010-1234-5678", "ROLE_USER"));
 //            userService.saveUser(new User(null, "Will Smith", "will" , "1234", new ArrayList<>()));
 //            userService.saveUser(new User(null, "Jim Carry", "jim" , "1234", new ArrayList<>()));
 //            userService.saveUser(new User(null, "Arnold Schwarzenegger", "arnold" , "1234", new ArrayList<>()));

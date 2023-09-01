@@ -1,8 +1,8 @@
 package com.development.ssosung.service;
 
-import com.development.ssosung.domain.Role;
 import com.development.ssosung.domain.User;
-import com.development.ssosung.repo.RoleRepo;
+import com.development.ssosung.dto.UserDto;
+import com.development.ssosung.global.exception.BadRequestException;
 import com.development.ssosung.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,63 +16,57 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.Optional;
 
 @Service @RequiredArgsConstructor @Transactional @Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepo userRepo;
-    private final RoleRepo roleRepo;
     private final PasswordEncoder passwordEncoder;
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByUsername(username);
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        User user = userRepo.findByUserId(userId);
         if(user == null) {
             log.error("User not found in the database");
             throw new UsernameNotFoundException("User not found in the database");
         }else{
-            log.info("User found in the database : {}", username);
+            log.info("User found in the database : {}", userId);
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        });
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+        authorities.add(new SimpleGrantedAuthority(user.getUserRole()));
+        return new org.springframework.security.core.userdetails.User(user.getUserId(), user.getUserPw(), authorities);
     }
 
     @Override
-    public User saveUser(User user) {
-        log.info("Saving new user {} to the database", user.getName());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepo.save(user);
+    public void saveUser(UserDto.UserSaveRequest request) {
+        log.info("Saving new user {} to the database", request.getUserNm());
+        request.setUserPw(passwordEncoder.encode(request.getUserPw()));
+
+        Optional<User> user = userRepo.findById(request.getUserId());
+
+        if(user.isPresent()) {
+            throw new BadRequestException("이미 있는 유저아이디 입니다.");
+        }else{
+            User newUser = User.builder()
+                    .userId(request.getUserId())
+                    .userPw(request.getUserPw())
+                    .userNm(request.getUserNm())
+                    .userTel(request.getUserTel())
+                    .userRole("ROLE_USER")
+                    .build();
+
+            userRepo.save(newUser);
+        }
+
     }
 
-    @Override
-    public Role saveRole(Role role) {
-        log.info("Saving new role {} to the database", role.getName());
-        return roleRepo.save(role);
-    }
 
     @Override
-    public void addRoleToUser(String userName, String roleName) {
-        log.info("Adding role {} to the user {}", roleName, userName);
-        User user = userRepo.findByUsername(userName);
-        Role role = roleRepo.findByName(roleName);
-        user.getRoles().add(role);
-    }
-
-    @Override
-    public User getUser(String userName) {
-        log.info("Fetching user {}", userName);
-        return userRepo.findByUsername(userName);
-    }
-
-    @Override
-    public List<User> getUsers() {
-        log.info("Fetching all users");
-        return userRepo.findAll();
+    public User getUser(String userId) {
+        log.info("Fetching user {}", userId);
+        return userRepo.findByUserId(userId);
     }
 
 
