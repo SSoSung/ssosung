@@ -35,4 +35,9 @@ public class User {
         this.userTel = userTel;
         this.userRole = userRole;
     }
+
+    public void update(String userNm, String userTel){
+        this.userNm = userNm;
+        this.userTel = userTel;
+    }
 }

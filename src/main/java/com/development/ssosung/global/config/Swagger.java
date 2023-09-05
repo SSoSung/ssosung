@@ -21,7 +21,7 @@ public class Swagger {
                 .groupName("SSoSung")
                 .select()
                 // .apis(RequestHandlerSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.development.ssosung.controller.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.development.ssosung.api"))
                 .paths(PathSelectors.any())
                 .build().apiInfo(apiInfo()).useDefaultResponseMessages(false);
     }
