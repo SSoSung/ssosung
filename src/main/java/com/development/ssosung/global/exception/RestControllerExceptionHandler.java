@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.mail.MessagingException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -36,4 +37,16 @@ public class RestControllerExceptionHandler {
 
         return new ResponseEntity<>(ssoSungApiException, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(MessagingException.class)
+    public ResponseEntity<Object> handleApiRequestException(MessagingException e) {
+        SsoSungApiResponse ssoSungApiException = new SsoSungApiResponse(
+                SsoSungStatus.SYSTEM_ERROR,
+                e.getMessage(),
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(ssoSungApiException, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
