@@ -36,6 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-# 개인정보다잉
+# 개인정보다잉!
 src/main/resources/application.properties
 src/main/resources/application.yml
