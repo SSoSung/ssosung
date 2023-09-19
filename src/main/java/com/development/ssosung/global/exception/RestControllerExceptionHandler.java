@@ -27,6 +27,17 @@ public class RestControllerExceptionHandler {
         return new ResponseEntity<>(ssoSungApiException, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(value = AccessDeniedException.class)
+    public ResponseEntity<SsoSungApiResponse> handleApiRequestException(AccessDeniedException e){
+        SsoSungApiResponse ssoSungApiException = new SsoSungApiResponse(
+                SsoSungStatus.FORBIDDEN,
+                e.getMessage(),
+                ZonedDateTime.now(ZoneId.of("Z"))
+        );
+
+        return new ResponseEntity<>(ssoSungApiException, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleApiRequestException(MethodArgumentNotValidException e) {
         SsoSungApiResponse ssoSungApiException = new SsoSungApiResponse(

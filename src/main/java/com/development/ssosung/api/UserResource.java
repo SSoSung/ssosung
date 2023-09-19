@@ -71,7 +71,9 @@ public class UserResource {
         return ResponseEntity.status(HttpStatus.OK).body(new SsoSungApiResponse(SsoSungStatus.OK, "회원삭제완료"));
     }
 
-    @ApiOperation(value="Access Token 재발급", notes="Access Token이 만료되면 재발급한다.(Refresh Token이 만료되면 다시 로그인 시키는 구조)")
+    @ApiOperation(value="Access Token 재발급", notes="Access Token이 만료되면 재발급한다.(Refresh Token이 만료되면 다시 로그인 시키는 구조)," +
+            "Access Token을 던졌을시 기간이 만료되었으면 FORBIDDEN에러가 발생!" +
+            "에러가 발생하면 헤더에 Refresh Token을 넣어서 보낸다.")
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
