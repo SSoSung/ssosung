@@ -87,7 +87,7 @@ public class UserResource {
                 User user = userService.getUser(userId);
                 String access_token = JWT.create()
                         .withSubject(user.getUserId())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                        .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000)) // 10분
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("roles", user.getUserRole())
                         .sign(algorithm);
